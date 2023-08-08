@@ -1,8 +1,38 @@
+"use client"
+// todo ↑RSCについて調査
+
+import { useState } from 'react'
+
 export default function Home() {
+  const [text, setText] = useState('')
+
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="mb-32 grid text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left">
+    <main className="text-center items-center p-24">
+      <div className="text-xl">
         ToDo App
+      </div>
+
+      {/* フォーム */}
+      <div className="mt-4">
+        <div>
+          <input
+            value={text}
+            onChange={(e) => setText(e.target.value)}
+            type="text"
+            className="text-stone-700 rounded"
+          />
+        </div>
+
+        <div>{text}</div>
+
+        <div className="mt-4">
+          <button className="bg-stone-700 rounded px-4">add</button>
+        </div>
+      </div>
+
+      {/* ToDoリスト */}
+      <div className="mt-6">
+        <div className="text-lg">ToDo List</div>
       </div>
     </main>
   )
