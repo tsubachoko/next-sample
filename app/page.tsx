@@ -3,17 +3,28 @@
 
 import { useState } from 'react'
 
+type TodoTask = {
+  text: string
+  isDone: boolean
+}
+
 export default function Home() {
   const [text, setText] = useState('')
-  const [taskList, setTaskList] = useState<string[]>([])
+  const [taskList, setTaskList] = useState<TodoTask[]>([])
 
   const pushTask = () => {
     if (!text) {
       return
     }
 
-    setTaskList([...taskList, text])
+    setTaskList([...taskList, { text, isDone: false }])
     setText('')
+  }
+
+  const toggleTask = (index: number) => {
+    const newTaskList = [...taskList]
+    newTaskList[index].isDone = !newTaskList[index].isDone
+    setTaskList(newTaskList)
   }
 
   return (
@@ -33,8 +44,6 @@ export default function Home() {
           />
         </div>
 
-        <div>{text}</div>
-
         <div className="mt-4">
           <button
             className="bg-stone-700 rounded px-4"
@@ -49,8 +58,18 @@ export default function Home() {
 
         <div className="text-left">
           {taskList.map((task, index) => (
-            <div key={index}>
-              <div>{task}</div>
+            <div key={index} className="border-b-1 mt-1">
+              <div className='p-1 flex'>
+                <div className="mr-2">
+                  <input
+                    type="checkbox"
+                    checked={task.isDone}
+                    onChange={() => toggleTask(index)}
+                  />
+                </div>
+                <div>{task.text}</div>
+              </div>
+              <hr />
             </div>
           ))}
         </div>
